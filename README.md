@@ -40,11 +40,19 @@ telecom-churn-prediction/
 
 ## How to Run
 
-1. Clone the repository
-2. Create and activate a virtual environment
-3. Install dependencies:
+### 1) Clone the repository
+```bash
+git clone https://github.com/<YOUR-USERNAME>/telecom-churn-prediction.git
+cd telecom-churn-prediction
+
+### 2) Install the necessary dependencies
    ```bash
    pip install -r requirements.txt
+
+### 3) Run the full pipeline
+```bash
+python telecom_churn_modeling.py
+
 
 ## Modeling Approach (Interpretable + Cost-Sensitive)
 
