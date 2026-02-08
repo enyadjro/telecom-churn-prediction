@@ -34,3 +34,42 @@ notebooks/   Exploratory analysis and experiments
 src/         Reusable modeling and evaluation code
 figures/     Generated plots and diagnostics
 models/      Trained models and calibration artifacts
+
+## Modeling Approach (Interpretable + Cost-Sensitive)
+
+We evaluated multiple classification models (e.g., linear and tree-based) during experimentation.  
+The final pipeline uses **Logistic Regression** as the primary model because it provides **well-behaved probabilities** and strong **interpretability**, which aligns with the project goal: **cost-sensitive decision-making** (not just accuracy).
+
+**Pipeline highlights**
+- **Imbalance handling:** SMOTE applied **only to training folds** (prevents leakage)
+- **Probability calibration:** Isotonic regression on a calibration split
+- **Decision rule:** Business-aware **threshold optimization** to minimize expected cost (vs. default 0.5 cutoff)
+- **Explainability:** Permutation importance + partial dependence to interpret drivers of churn risk
+
+---
+
+## Results & Diagnostics
+
+### Discrimination performance
+ROC and Precision–Recall curves summarize ranking performance on the test set.
+
+![ROC Curve](figures/roc_curve_test.png)
+
+![Precision-Recall Curve](figures/pr_curve_test.png)
+
+### Cost-sensitive thresholding (decision-focused)
+Instead of a fixed 0.5 threshold, we select an operating point that minimizes expected cost by balancing:
+- **False negatives** (missed churners → lost revenue)
+- **False positives** (unnecessary retention offers → intervention cost)
+
+![Cost Curve / Threshold](figures/cost_curve_threshold.png)
+
+![Confusion Matrix at Optimal Threshold](figures/confusion_matrix_optthr.png)
+
+### Interpretability (what drives churn risk)
+Top drivers are consistent with telecom churn behavior: tenure, contract type, and internet service features.
+
+![Top Feature Importance](figures/feature_importance.png)
+
+![Partial Dependence (Top Features)](figures/partial_dependence_top_features.png)
+
