@@ -40,13 +40,11 @@ telecom-churn-prediction/
 
 ## How to Run
 
-### Option A: Run locally (recommended)
 1. Clone the repository
 2. Create and activate a virtual environment
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
-```
 
 ## Modeling Approach (Interpretable + Cost-Sensitive)
 
