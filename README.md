@@ -29,12 +29,12 @@ Instead of relying on a fixed 0.5 classification cutoff, the model selects an op
 ## Repository Structure
 
 telecom-churn-prediction/
-├── data/        Raw and processed datasets
-├── notebooks/   Exploratory analysis and experiments
-├── src/         Reusable modeling and evaluation code
-├── figures/     Generated plots and diagnostics
-├── models/      Trained models and calibration artifacts
-├── README.md
+├── data/ # Raw and processed datasets
+├── notebooks/ # Exploratory analysis and experiments
+├── src/ # Reusable modeling and evaluation code
+├── figures/ # Generated plots and diagnostics
+├── models/ # Trained models and calibration artifacts
+└── README.md
 
 ## Modeling Approach (Interpretable + Cost-Sensitive)
 
