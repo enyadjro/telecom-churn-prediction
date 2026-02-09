@@ -42,29 +42,34 @@ import joblib
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline as ImbPipeline
 
-# ----------------------------
-# Paths
-# ----------------------------
-PROJECT_DIR = Path.cwd()
-RAW_PATH = PROJECT_DIR / "Telco_customer_churn.xlsx"
+# =========================
+# Paths / project structure
+# =========================
+PROJECT_ROOT = Path(__file__).resolve().parent
 
-OUTPUT_DIR = PROJECT_DIR / "outputs"
-FIG_DIR = OUTPUT_DIR / "figures"
-MODEL_DIR = OUTPUT_DIR / "models"
-TABLE_DIR = OUTPUT_DIR / "tables"
-CLEAN_DIR = OUTPUT_DIR / "data_clean"
+DATA_DIR  = PROJECT_ROOT / "data"
+RAW_PATH  = DATA_DIR / "Telco_customer_churn.xlsx"   
 
-for d in [OUTPUT_DIR, FIG_DIR, MODEL_DIR, TABLE_DIR, CLEAN_DIR]:
+OUTPUT_DIR = PROJECT_ROOT / "outputs"
+FIG_DIR    = OUTPUT_DIR / "figures"
+MODEL_DIR  = OUTPUT_DIR / "models"
+TABLE_DIR  = OUTPUT_DIR / "tables"
+CLEAN_DIR  = OUTPUT_DIR / "data_clean"
+
+for d in [DATA_DIR, OUTPUT_DIR, FIG_DIR, MODEL_DIR, TABLE_DIR, CLEAN_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
-print("Project dir:", PROJECT_DIR)
+print("Project root:", PROJECT_ROOT)
 print("Raw file exists:", RAW_PATH.exists(), "|", RAW_PATH.name)
 
 if not RAW_PATH.exists():
     raise FileNotFoundError(
-        f"Could not find {RAW_PATH.name} in {PROJECT_DIR}.\n"
-        "Place Telco_customer_churn.xlsx in the same folder as this script/notebook."
+        f"Could not find {RAW_PATH}.\n"
+        "Put Telco_customer_churn.xlsx inside the repo's /data folder."
     )
+
+# Optional: reproducibility
+RANDOM_STATE = 42
 
 # ============================================================
 # BUSINESS GOAL SETTINGS
@@ -404,7 +409,7 @@ for c in df_eda.select_dtypes(include=["object"]).columns:
 
 cols = df_eda.columns
 
-TARGET_CANDIDATES = ["Churn", "Churn Value"]
+TARGET_CANDIDATES = ["Churn Label", "Churn", "Churn Value"]
 TENURE_CANDIDATES = ["tenure", "Tenure Months"]
 MONTHLY_CANDIDATES = ["MonthlyCharges", "Monthly Charges"]
 TOTAL_CANDIDATES = ["TotalCharges", "Total Charges"]
@@ -765,7 +770,7 @@ df_human = df_human.loc[X.index].reset_index(drop=True)
 # Train/Test split (keep human rows aligned)
 X_train, X_test, y_train, y_test, human_train, human_test = train_test_split(
     X, y, df_human,
-    test_size=0.20, random_state=42, stratify=y
+    test_size=0.20, random_state=RANDOM_STATE, stratify=y
 )
 
 numeric_features = X.columns.tolist()
@@ -783,11 +788,11 @@ preprocess = ColumnTransformer(
 # Candidate models
 models = {
     "LogReg": LogisticRegression(max_iter=2000),
-    "RandomForest": RandomForestClassifier(n_estimators=500, random_state=42, n_jobs=-1),
-    "HistGB": HistGradientBoostingClassifier(random_state=42),
+    "RandomForest": RandomForestClassifier(n_estimators=500, random_state=RANDOM_STATE, n_jobs=-1),
+    "HistGB": HistGradientBoostingClassifier(random_state=RANDOM_STATE),
 }
 
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
 scoring = {
     "roc_auc": "roc_auc",
     "avg_precision": "average_precision",
@@ -801,7 +806,7 @@ def make_training_pipe(clf):
     # Oversampling occurs inside CV folds (no leakage). Keep it internal.
     return ImbPipeline(steps=[
         ("preprocess", preprocess),
-        ("oversample", SMOTE(random_state=42)),
+        ("oversample", SMOTE(random_state=RANDOM_STATE)),
         ("model", clf)
     ])
 
@@ -853,11 +858,11 @@ print("\n--- VALIDATION: Threshold optimization + probability calibration ---")
 # - Val: choose operating threshold by expected business cost
 X_fit, X_tmp, y_fit, y_tmp, human_fit, human_tmp = train_test_split(
     X_train, y_train, human_train,
-    test_size=0.40, random_state=42, stratify=y_train
+    test_size=0.40, random_state=RANDOM_STATE, stratify=y_train
 )
 X_cal, X_val, y_cal, y_val, human_cal, human_val = train_test_split(
     X_tmp, y_tmp, human_tmp,
-    test_size=0.50, random_state=42, stratify=y_tmp
+    test_size=0.50, random_state=RANDOM_STATE, stratify=y_tmp
 )
 
 # (a) Fit model on X_fit
@@ -980,11 +985,11 @@ def save_permutation_importance(calibrated_model, tag="final"):
         y_test,
         scoring="average_precision",
         n_repeats=10,
-        random_state=42,
+        random_state=RANDOM_STATE,
         n_jobs=-1
     )
     fi_df = pd.DataFrame({
-        "feature": np.array(numeric_features),
+        "feature": X_test.columns.to_numpy(),
         "importance": perm.importances_mean,
         "importance_std": perm.importances_std
     }).sort_values("importance", ascending=False)
@@ -1085,3 +1090,4 @@ with open(meta_path, "w", encoding="utf-8") as f:
 print("Saved:", meta_path)
 
 print("\nDONE.")
+
