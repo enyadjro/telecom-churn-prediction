@@ -69,6 +69,8 @@ telecom-churn-prediction/
 ├── src/         # Reusable modeling and evaluation code
 ├── figures/     # Generated plots and diagnostics
 ├── models/      # Trained models and calibration artifacts
+├── telecom_churn_modeling.py
+├── requirements.txt
 └── README.md
 ```
 
