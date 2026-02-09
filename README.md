@@ -91,6 +91,8 @@ Place the dataset file Telco_customer_churn.xlsx inside the data/ folder
 python telecom_churn_modeling.py
 ```
 
+---
+
 ## Feature Engineering & Multicollinearity Control
 
 - Categorical variables were encoded using **one-hot encoding**
@@ -104,6 +106,8 @@ This ensured:
 - More stable logistic regression coefficients
 - Reduced redundancy among correlated service indicators
 - A consistent feature set used across all downstream modeling
+
+---
 
 ## Modeling Approach (Interpretable + Cost-Sensitive)
 
@@ -136,6 +140,8 @@ Where:
 - **C_FP:** cost of unnecessary retention outreach
 
 The decision threshold is chosen to **minimize expected cost**, not maximize accuracy.
+
+---
 
 ## Key Results
 
