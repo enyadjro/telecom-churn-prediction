@@ -176,6 +176,8 @@ Top drivers are consistent with telecom churn behavior: tenure, contract type, a
 
 ![Partial Dependence (Top Features)](figures/partial_dependence_top_features.png)
 
+---
+
 ## Interpretability & Business Implications
 
 ### Top Drivers of Churn
