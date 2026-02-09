@@ -64,13 +64,15 @@ These insights guided feature engineering, model choice, and downstream interpre
 
 ```text
 telecom-churn-prediction/
-├── data/        # Raw and processed datasets
-├── notebooks/   # Exploratory analysis and experiments
+├── data/        # Input dataset (not versioned)
+├── notebooks/   # Exploratory analysis (optional / future)
 ├── src/         # Reusable modeling and evaluation code
-├── figures/     # Generated plots and diagnostics
-├── models/      # Trained models and calibration artifacts
-├── telecom_churn_modeling.py
-├── requirements.txt
+├── telecom_churn_modeling.py  # End-to-end pipeline
+├── outputs/     # Generated artifacts (created at runtime)
+│   ├── figures/
+│   ├── models/
+│   ├── tables/
+│   └── data_clean/
 └── README.md
 ```
 
