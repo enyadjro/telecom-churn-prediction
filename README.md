@@ -111,7 +111,7 @@ This ensured:
 
 ## Modeling Approach (Interpretable + Cost-Sensitive)
 
-We evaluated multiple classification models (e.g., linear and tree-based) during experimentation.  
+We evaluated multiple classification models (e.g., linear and tree-based - LogReg, HistGB, Random Forest) during experimentation.  
 The final pipeline uses **Logistic Regression** as the primary model because it provides **well-behaved probabilities** and strong **interpretability**, which aligns with the project goal: **cost-sensitive decision-making** (not just accuracy).
 
 **Pipeline highlights**
