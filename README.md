@@ -1,5 +1,7 @@
 # Cost-Sensitive Customer Churn Prediction for a Telecom Provider
 
+End-to-end cost-sensitive machine learning system for churn prediction and retention decision-making, with API deployment.
+
 ![Language](https://img.shields.io/badge/Language-Python-blue)
 ![Domain](https://img.shields.io/badge/Domain-Telecom-orange)
 ![Task](https://img.shields.io/badge/Task-Customer%20Churn-red)
