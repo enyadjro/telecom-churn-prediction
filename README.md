@@ -9,7 +9,14 @@
 
 This project develops an end-to-end, interpretable machine learning pipeline to predict customer churn for a telecommunications provider.  
 Rather than optimizing raw classification accuracy, the emphasis is on **cost-sensitive decision-making**, combining probability calibration, class imbalance handling, and business-aware threshold optimization.
+---
+## Key Results
 
+- ROC-AUC: ~0.84
+- PR-AUC: ~0.62
+- Optimal threshold: ~0.27
+- Reduced missed churners vs 0.5 threshold
+- Lower total business cost
 ---
 
 ## Problem Overview
