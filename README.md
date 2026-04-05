@@ -210,6 +210,7 @@ Example Output:
   "risk_level": "high",
   "recommended_action": "Prioritize retention outreach"
 }
+```
 ---
 ## Repository Structure
 
