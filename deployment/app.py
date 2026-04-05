@@ -11,9 +11,9 @@ class CustomerInput(BaseModel):
     tenure: float
     monthly_charges: float
     total_charges: float
-    contract_month_to_month: int
-    internet_service_fiber_optic: int
-    payment_method_electronic_check: int
+    contract: str
+    internet_service: str
+    payment_method: str
 
 @app.get("/")
 def root():
@@ -31,13 +31,13 @@ def predict(customer: CustomerInput):
     elif customer.tenure < 24:
         score += 0.15
 
-    if customer.contract_month_to_month == 1:
+    if customer.contract == "Month-to-month":
         score += 0.25
 
-    if customer.internet_service_fiber_optic == 1:
+    if customer.internet_service == "Fiber optic":
         score += 0.15
 
-    if customer.payment_method_electronic_check == 1:
+    if customer.payment_method == "Electronic check":
         score += 0.15
 
     if customer.monthly_charges > 80:
