@@ -67,43 +67,6 @@ These insights guided feature engineering, model choice, and downstream interpre
 
 ---
 
-## Repository Structure
-
-```text
-telecom-churn-prediction/
-├── data/        # Input dataset (not versioned)
-├── notebooks/   # Exploratory analysis (optional / future)
-├── src/         # Reusable modeling and evaluation code
-├── telecom_churn_modeling.py  # End-to-end pipeline
-├── outputs/     # Generated artifacts (created at runtime)
-│   ├── figures/
-│   ├── models/
-│   ├── tables/
-│   └── data_clean/
-└── README.md
-```
-
-## How to Run
-
-### 1) Clone or download this repository
-```bash
-git clone https://github.com/<YOUR-USERNAME>/telecom-churn-prediction.git
-cd telecom-churn-prediction
-```
-### 2) Install the necessary dependencies
-   ```bash
-pip install -r requirements.txt
-```
-### 3) Install the necessary dependencies
-Place the dataset file Telco_customer_churn.xlsx inside the data/ folder
-
-### 4) Run the full pipeline
-```bash
-python telecom_churn_modeling.py
-```
-
----
-
 ## Feature Engineering & Multicollinearity Control
 
 - Categorical variables were encoded using **one-hot encoding**
@@ -215,3 +178,55 @@ These effects are consistent across:
   - Conservative outreach when intervention costs increase
 
 - The model outputs **calibrated probabilities**, enabling flexible policy decisions rather than hard labels.
+
+---
+## Deployment Demo (FastAPI)
+
+A lightweight API demo is included in `deployment/` to show how churn scoring can be exposed as a simple prediction service.
+
+### Files
+- `deployment/app.py`
+- `deployment/requirements.txt`
+
+### Run locally
+
+```bash
+pip install -r deployment/requirements.txt
+uvicorn deployment.app:app --reload
+
+---
+## Repository Structure
+
+```text
+telecom-churn-prediction/
+├── data/        # Input dataset (not versioned)
+├── notebooks/   # Exploratory analysis (optional / future)
+├── src/         # Reusable modeling and evaluation code
+├── telecom_churn_modeling.py  # End-to-end pipeline
+├── outputs/     # Generated artifacts (created at runtime)
+│   ├── figures/
+│   ├── models/
+│   ├── tables/
+│   └── data_clean/
+└── README.md
+```
+
+## How to Run
+
+### 1) Clone or download this repository
+```bash
+git clone https://github.com/<YOUR-USERNAME>/telecom-churn-prediction.git
+cd telecom-churn-prediction
+```
+### 2) Install the necessary dependencies
+   ```bash
+pip install -r requirements.txt
+```
+### 3) Install the necessary dependencies
+Place the dataset file Telco_customer_churn.xlsx inside the data/ folder
+
+### 4) Run the full pipeline
+```bash
+python telecom_churn_modeling.py
+```
+---
