@@ -11,9 +11,9 @@ class CustomerInput(BaseModel):
     tenure: float
     monthly_charges: float
     total_charges: float
-    contract_month_to_month: int
-    internet_service_fiber_optic: int
-    payment_method_electronic_check: int
+    contract: str
+    internet_service: str
+    payment_method: str
 
 @app.get("/")
 def root():
