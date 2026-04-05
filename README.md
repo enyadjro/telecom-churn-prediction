@@ -7,17 +7,17 @@
 ![Focus](https://img.shields.io/badge/Focus-Threshold%20Optimization-lightgrey)
 ![Output](https://img.shields.io/badge/Output-Retention%20Insights-purple)
 
-This project develops an end-to-end, interpretable machine learning pipeline to predict customer churn for a telecommunications provider.  
+This project develops an end-to-end, interpretable machine learning pipeline to predict customer churn for a telecommunications provider. It includes a FastAPI deployment for real-time churn prediction and decision support.
 Rather than optimizing raw classification accuracy, the emphasis is on **cost-sensitive decision-making**, combining probability calibration, class imbalance handling, and business-aware threshold optimization.
 
 ---
 ## Key Results
 
-- ROC-AUC: ~0.84
-- PR-AUC: ~0.62
-- Optimal threshold: ~0.27
-- Reduced missed churners vs 0.5 threshold
-- Lower total business cost
+- **ROC-AUC:** ~0.84
+- **PR-AUC:** ~0.62 (strong given class imbalance)
+- **Optimal threshold:** ~0.27 (cost-minimizing)
+- **Recall improvement:** substantially fewer missed churners compared to a 0.5 cutoff
+- **Trade-off:** higher false positives, but lower overall business cost
 ---
 
 ## Problem Overview
@@ -124,17 +124,6 @@ Where:
 The decision threshold is chosen to **minimize expected cost**, not maximize accuracy.
 
 ---
-
-## Key Results
-
-- **ROC-AUC:** ~0.84
-- **PR-AUC:** ~0.62 (strong given class imbalance)
-- **Optimal threshold:** ~0.27 (cost-minimizing)
-- **Recall improvement:** substantially fewer missed churners compared to a 0.5 cutoff
-- **Trade-off:** higher false positives, but lower overall business cost
-
-This demonstrates why **threshold selection matters as much as model choice**.
-
 ### Discrimination performance
 ROC and Precision–Recall curves summarize ranking performance on the test set.
 
@@ -200,8 +189,27 @@ A lightweight API demo is included in `deployment/` to show how churn scoring ca
 
 ```bash
 pip install -r deployment/requirements.txt
-uvicorn deployment.app:app --reload
+python -m uvicorn deployment.app:app --reload
 
+Then open:
+http://127.0.0.1:8000/docs
+
+Example Input:
+{
+  "tenure": 5,
+  "monthly_charges": 80,
+  "total_charges": 100,
+  "contract": "Month-to-month",
+  "internet_service": "Fiber optic",
+  "payment_method": "Electronic check"
+}
+
+Example Output:
+{
+  "churn_probability": 0.7,
+  "risk_level": "high",
+  "recommended_action": "Prioritize retention outreach"
+}
 ---
 ## Repository Structure
 
@@ -230,7 +238,7 @@ cd telecom-churn-prediction
    ```bash
 pip install -r requirements.txt
 ```
-### 3) Install the necessary dependencies
+### 3) Add the dataset
 Place the dataset file Telco_customer_churn.xlsx inside the data/ folder
 
 ### 4) Run the full pipeline
