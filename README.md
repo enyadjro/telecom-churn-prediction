@@ -1,5 +1,12 @@
 # Cost-Sensitive Customer Churn Prediction for a Telecom Provider
 
+![Language](https://img.shields.io/badge/Language-Python-blue)
+![Domain](https://img.shields.io/badge/Domain-Telecom-orange)
+![Task](https://img.shields.io/badge/Task-Customer%20Churn-red)
+![Method](https://img.shields.io/badge/Method-Cost--Sensitive%20ML-green)
+![Focus](https://img.shields.io/badge/Focus-Threshold%20Optimization-lightgrey)
+![Output](https://img.shields.io/badge/Output-Retention%20Insights-purple)
+
 This project develops an end-to-end, interpretable machine learning pipeline to predict customer churn for a telecommunications provider.  
 Rather than optimizing raw classification accuracy, the emphasis is on **cost-sensitive decision-making**, combining probability calibration, class imbalance handling, and business-aware threshold optimization.
 
